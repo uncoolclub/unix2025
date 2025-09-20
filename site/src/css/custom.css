@@ -1,0 +1,157 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* Load Pretendard (variable) from CDN */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css");
+
+/* You can override the default Infima variables here. */
+:root {
+  /* Accent (clean blue) */
+  --ifm-color-primary: #2f54eb; /* base */
+  --ifm-color-primary-dark: #2446cf;
+  --ifm-color-primary-darker: #1f3eb9;
+  --ifm-color-primary-darkest: #193393;
+  --ifm-color-primary-light: #5772ee;
+  --ifm-color-primary-lighter: #7a8ff2;
+  --ifm-color-primary-lightest: #aab8f7;
+
+  /* Neutral + typography */
+  --ifm-font-family-base: "Pretendard", -apple-system, BlinkMacSystemFont,
+    "Noto Sans KR", "Apple SD Gothic Neo", "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --ifm-font-size-base: 17px;
+  --ifm-line-height-base: 1.75;
+  --ifm-heading-font-weight: 700;
+  --ifm-container-width-xl: 820px; /* narrower content width for readability */
+  /* Sidebar width */
+  --doc-sidebar-width: 220px;
+
+  /* Base text color */
+  --ifm-font-color-base: #333d4b;
+
+  /* Surfaces */
+  --ifm-background-color: #ffffff;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-toc-padding-vertical: 0.25rem;
+
+  /* Code highlight */
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.04);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme="dark"] {
+  --ifm-color-primary: #7aa2ff;
+  --ifm-color-primary-dark: #5f8fff;
+  --ifm-color-primary-darker: #4a83ff;
+  --ifm-color-primary-darkest: #3a69d0;
+  --ifm-color-primary-light: #9db9ff;
+  --ifm-color-primary-lighter: #b7caff;
+  --ifm-color-primary-lightest: #d6e1ff;
+  --ifm-background-color: #0d0f13;
+  --ifm-navbar-background-color: #0d0f13;
+  /* Base text color for dark mode */
+  --ifm-font-color-base: #e6ebf2;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.06);
+}
+
+/* Headings spacing/weights for cleaner rhythm */
+.markdown h1 {
+  letter-spacing: -0.01em;
+}
+.markdown h2 {
+  margin-top: 1.6rem;
+  letter-spacing: -0.01em;
+}
+.markdown h3 {
+  margin-top: 1.2rem;
+  letter-spacing: -0.005em;
+}
+
+/* Navbar: flat, minimal */
+.navbar {
+  box-shadow: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.navbar__title,
+.navbar__link {
+  color: var(--ifm-font-color-base) !important;
+}
+.navbar__link:hover {
+  color: var(--ifm-color-primary) !important;
+}
+
+/* Navbar hover: remove bottom border/underline entirely */
+.navbar a,
+.navbar__link,
+.navbar__brand {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+.navbar a:hover,
+.navbar__link:hover,
+.navbar__brand:hover,
+.navbar__link--active {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Footer: flat divider */
+.footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Code blocks: subtle background and border */
+pre,
+code {
+  border-radius: 10px;
+}
+pre {
+  background: #f7f8fa;
+  border: 1px solid #eceef1;
+}
+code {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Blockquote: clean left rule */
+blockquote {
+  border-left: 3px solid var(--ifm-color-primary);
+  background: rgba(47, 84, 235, 0.03);
+  padding: 0.75rem 1rem;
+}
+
+/* Buttons: slightly rounded, minimal */
+.button.button--primary {
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+/* Tables: subtle borders */
+.table {
+  border: 1px solid #eceef1;
+}
+.table thead th {
+  background: #fafbfc;
+}
+
+/* Sidebar density tweaks */
+.theme-doc-sidebar-container {
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+}
+.menu__link {
+  font-size: 13px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.menu__list .menu__list .menu__link {
+  /* nested items a bit smaller */
+  font-size: 12px;
+}
+
+/* Pagination label: show as 2-line with bold chapter on first line */
+/* pagination labels: use default Docusaurus styles */
