@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2장 — 디렉토리 다루기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter01.html">← 이전 챕터</a>
+      <a href="chapter03.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 유닉스 파일 시스템</h1>
+
+      <h2>파일과 파일 시스템</h2>
+      <ul>
+        <li>파일: 관련 정보의 집합. 텍스트/바이너리로 구분.</li>
+        <li>
+          파일 시스템: 파일과 디렉토리를 계층적으로 관리하는 구조(루트
+          <code>/</code>에서 시작).
+        </li>
+      </ul>
+
+      <h2>파일의 종류</h2>
+      <ul>
+        <li>일반 파일: 데이터 저장(텍스트/바이너리).</li>
+        <li>
+          디렉토리 파일: 파일·하위 디렉토리의 "이름 목록"을 담는 특수 파일.
+        </li>
+        <li>심볼릭 링크: 원본을 가리키는 특수 파일(원본 삭제 시 끊김).</li>
+        <li>장치 파일: 장치 접근용 특수 파일(메이저/마이너 번호로 식별).</li>
+      </ul>
+
+      <h2>디렉토리 계층 구조와 특수 표기</h2>
+      <ul>
+        <li>
+          루트(<code>/</code>) → 하위 디렉토리(가지) → 파일(잎)로 이어지는 트리
+          구조.
+        </li>
+        <li>
+          특수 디렉토리: 홈 <code>~</code>, 현재 <code>.</code>, 상위
+          <code>..</code>.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h1>2. 경로와 명명 규칙</h1>
+
+      <h2>절대 경로 vs 상대 경로</h2>
+      <ul>
+        <li>
+          절대 경로: <code>/</code>부터 시작하는 전체 경로. 예)
+          <code>/home/user/docs</code>.
+        </li>
+        <li>
+          상대 경로: 현재 위치 기준. 예) <code>../docs</code>,
+          <code>./run.sh</code>.
+        </li>
+      </ul>
+
+      <pre><code># 현재 위치(절대경로)
+pwd
+# 상위로 이동 후 하위로 이동
+cd .. &amp;&amp; cd project/src
+# 홈으로 이동
+cd ~</code></pre>
+
+      <h2>파일/디렉토리 명명 규칙</h2>
+      <ul>
+        <li>사용 권장: 영문 대소문자, 숫자, <code>- _ .</code></li>
+        <li>주의: 공백·특수문자는 따옴표로 감싸거나 \ 로 이스케이프</li>
+        <li>금지: <code>/</code> (경로 구분자)</li>
+        <li>
+          예시
+          <ul>
+            <li>
+              좋은 이름: <code>C</code>, <code>helloWorld.c</code>,
+              <code>unix</code>, <code>.secret</code>, <code>sample12</code>
+            </li>
+            <li>
+              나쁜 이름: <code>my dir</code>, <code>*hl</code>,
+              <code>#77dir</code> (특수문자·공백 포함)
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <hr />
+
+      <h1>3. 디렉토리 기본 명령</h1>
+
+      <h2>현재 디렉토리: <code>pwd</code></h2>
+      <ul>
+        <li>현재 작업 중인 디렉토리의 절대 경로를 출력.</li>
+      </ul>
+
+      <h2>이동: <code>cd [디렉토리]</code></h2>
+      <ul>
+        <li>인자 없이 실행하면 홈 디렉토리로 이동.</li>
+        <li>상대·절대 경로 모두 사용 가능.</li>
+      </ul>
+
+      <h2>목록: <code>ls [옵션] [경로]</code></h2>
+      <ul>
+        <li>
+          <code>-a</code>: 숨김 포함, <code>-l</code>: 상세, <code>-d</code>:
+          엔트리 자체, <code>-R</code>: 재귀, <code>-F</code>: 종류 표시,
+          <code>-u</code>: 최종 접근 시간 기준.
+        </li>
+      </ul>
+
+      <h2>생성/삭제: <code>mkdir</code>, <code>rmdir</code></h2>
+      <ul>
+        <li>
+          <code>mkdir &lt;이름&gt;</code>: 디렉토리 생성(필요 시
+          <code>-p</code>로 상위 포함).
+        </li>
+        <li><code>rmdir &lt;이름&gt;</code>: 빈 디렉토리 삭제.</li>
+      </ul>
+
+      <pre><code>ls -al          # 숨김 포함 상세 목록
+ls -d .         # 현재 디렉토리 엔트리 자체
+ls -R ~/work    # 하위까지 재귀 출력
+mkdir data &amp;&amp; cd data
+rmdir ../old_empty_dir</code></pre>
+
+      <h3>[실습] 빠른 체크</h3>
+      <ol>
+        <li>홈으로 이동 후 현재 위치 확인: <code>cd ~ &amp;&amp; pwd</code></li>
+        <li>숨김 파일 포함 목록 확인: <code>ls -al</code></li>
+        <li>
+          작업용 디렉토리 생성/이동:
+          <code>mkdir -p ~/work/logs &amp;&amp; cd ~/work</code>
+        </li>
+        <li>
+          상위로 이동 후 현재 디렉토리 엔트리만:
+          <code>cd .. &amp;&amp; ls -d .</code>
+        </li>
+      </ol>
+
+      <hr />
+
+      <h1>보충: 글로빙과 숨김 파일</h1>
+      <ul>
+        <li>
+          글로빙: <code>*</code>(임의 길이), <code>?</code>(1글자),
+          <code>[]</code>(문자 집합)로 패턴 매칭.
+        </li>
+        <li>
+          숨김 파일: 이름이 <code>.</code>으로 시작하면 기본 <code>ls</code>에서
+          보이지 않음(<code>-a</code> 필요).
+        </li>
+      </ul>
+
+      <pre><code>ls *.c    # .c로 끝나는 파일
+ls src/?_test.js</code></pre>
+
+      <h1>요약</h1>
+      <ul>
+        <li>유닉스는 모든 것을 파일로 다루며 트리형 파일 시스템을 사용한다.</li>
+        <li>
+          절대/상대 경로와 특수 디렉토리(<code>~</code>, <code>.</code>,
+          <code>..</code>)를 정확히 이해해야 한다.
+        </li>
+        <li>
+          <code>pwd</code>, <code>cd</code>, <code>ls</code>,
+          <code>mkdir</code>, <code>rmdir</code>는 디렉토리 작업의 기본이며,
+          옵션 조합으로 효율을 높일 수 있다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

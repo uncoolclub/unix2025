@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1장 — 유닉스 개요 및 기본 사용법</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="index.html">← 홈</a>
+      <a href="chapter02.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 유닉스 개요</h1>
+
+      <h2>유닉스란?</h2>
+      <ul>
+        <li>고급 언어(C 언어)로 개발된 최초의 운영체제</li>
+        <li>1969년 AT&T 벨 연구소에서 켄 톰슨, 데니스 리치가 개발</li>
+      </ul>
+
+      <h2>유닉스의 역사</h2>
+      <ul>
+        <li>1973년 어셈블리 → C 언어로 재작성</li>
+        <li>대학과 기업 중심 연구, BSD 계열과 AT&T 상업용 버전으로 발전</li>
+        <li>대표적 상업용 버전: System III, System V</li>
+      </ul>
+
+      <h2>유닉스의 종류</h2>
+      <ul>
+        <li>현재 UNIX는 "The Open Group"의 등록 상표</li>
+        <li>다양한 제조사별 제품 존재</li>
+        <li>
+          리눅스(Linux)는 유닉스 호환 계열 운영체제
+          <ul>
+            <li>1991년 리누스 토발즈가 개발 시작</li>
+            <li>오픈소스 기반으로 발전</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>유닉스의 특징</h2>
+      <ul>
+        <li>대화형 시스템</li>
+        <li>다중 사용자 지원</li>
+        <li>다중 작업 처리</li>
+        <li>이식성과 확장성 높음</li>
+        <li>계층적 트리 파일 시스템</li>
+        <li>다양한 유틸리티 제공</li>
+      </ul>
+
+      <h2>유닉스의 구조</h2>
+      <ul>
+        <li>
+          <strong>커널(Kernel)</strong>: 운영체제 핵심,
+          프로세스/메모리/파일/장치 관리
+        </li>
+        <li>
+          <strong>셸(Shell)</strong>: 사용자 인터페이스, 명령어 해석 및 실행
+        </li>
+        <li>
+          <strong>유틸리티(Utility)</strong>: 개발 도구, 문서 편집 도구 등
+        </li>
+      </ul>
+
+      <hr />
+
+      <h1>2. 유닉스 시스템 접속 방법과 명령 사용법</h1>
+
+      <h2>유닉스 시스템 접속</h2>
+      <ul>
+        <li>필요 요소: 단말기(Terminal), 사용자 계정(ID, 비밀번호)</li>
+        <li>원격 접속: SSH(Secure Shell) 사용 (텔넷의 보안 문제 개선)</li>
+      </ul>
+
+      <h3>[실습] ssh 접속 절차</h3>
+      <ol>
+        <li>터미널에서 <code>ssh ID@서버주소</code> 입력</li>
+        <li>최초 접속 시 호스트 지문 확인 → <code>yes</code></li>
+        <li>비밀번호 입력</li>
+        <li>접속 완료 후 쉘 프롬프트 확인</li>
+      </ol>
+
+      <h2>명령행 편집 방법</h2>
+      <ul>
+        <li>문자 지우기: Backspace</li>
+        <li>단어 지우기: Ctrl+W</li>
+        <li>문장 지우기: Ctrl+U</li>
+      </ul>
+
+      <h2>명령어 구조</h2>
+      <pre><code>명령어 [옵션] [인자]</code></pre>
+
+      <ul>
+        <li>
+          <strong>명령어</strong>: 실행할 프로그램 이름 (예: <code>ls</code>,
+          <code>date</code>)
+        </li>
+        <li><strong>옵션</strong>: 세부 기능 지정 (예: <code>ls -l</code>)</li>
+        <li>
+          <strong>인자</strong>: 파일명, 디렉토리명 등 (예:
+          <code>ls /tmp</code>)
+        </li>
+      </ul>
+
+      <h2>주요 기초 명령어</h2>
+      <ul>
+        <li><code>banner</code>: 큰 문자 출력</li>
+        <li><code>date</code>: 날짜와 시간 출력</li>
+        <li><code>clear</code>: 화면 초기화</li>
+        <li><code>man</code>: 명령어 설명 확인</li>
+      </ul>
+
+      <h2>비밀번호 변경</h2>
+      <ul>
+        <li>명령어: <code>passwd</code></li>
+        <li>규칙: 8자 이상, 숫자/특수문자 포함, 추측 어려운 패턴 권장</li>
+      </ul>
+
+      <h2>로그아웃 (접속 해제)</h2>
+      <ul>
+        <li>
+          <code>logout</code>, <code>exit</code>, 또는 <code>Ctrl + D</code>
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>보충: 리다이렉션·파이프와 경로 유틸리티</h2>
+
+      <ul>
+        <li>
+          리다이렉션: <code>&gt;</code>(덮어쓰기), <code>&gt;&gt;</code>(추가),
+          <code>&lt;</code>(표준입력 대체)
+        </li>
+        <li>파이프: <code>|</code> 로 명령을 연결해 출력→입력으로 전달</li>
+        <li>
+          도구 경로 확인: <code>which &lt;명령&gt;</code>, 셸 내장 여부:
+          <code>type &lt;명령&gt;</code>
+        </li>
+      </ul>
+
+      <pre><code>ls -al | grep "\.md$" &gt; md_list.txt
+which ls
+type cd</code></pre>
+
+      <h2>요약</h2>
+      <ul>
+        <li>
+          유닉스는 다중 사용자/다중 작업 운영체제이며 이식성·안정성이 뛰어나다.
+        </li>
+        <li>SSH로 안전하게 접속하고, 명령어·옵션·인자를 조합해 작업한다.</li>
+        <li>
+          <code>man</code>, 기본 명령들, <code>passwd</code>로의 계정 관리가
+          필수이며, 리다이렉션·파이프를 이해하면 작업 효율이 크게 향상된다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

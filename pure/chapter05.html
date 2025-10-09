@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5장 — 배시 셸 활용하기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter04.html">← 이전 챕터</a>
+      <a href="chapter06.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 셸 기본 사용법 익히기</h1>
+
+      <p>
+        셸(Shell)은 사용자가 입력한 명령을 해석하고 실행하는 역할을 하는
+        프로그램이다. 커널과 사용자 사이에서 명령을 전달하며, 다양한 유틸리티와
+        환경 제어 기능을 제공한다.
+      </p>
+
+      <h2>셸의 종류와 특징</h2>
+      <ul>
+        <li>
+          대표적인 셸: <code>sh</code>(본 셸), <code>ksh</code>(콘 셸),
+          <code>csh</code>(C 셸), <code>bash</code>(배시 셸)
+        </li>
+        <li>
+          프롬프트 구분: <code>$</code> (sh, ksh, bash) / <code>%</code> (csh)
+        </li>
+        <li>
+          로그인 셸: 로그인 시 자동으로 실행되는 기본 셸<br />
+          서브셸: 사용자가 직접 실행한 셸 인스턴스
+        </li>
+      </ul>
+
+      <h2>문자열 출력 명령</h2>
+      <ul>
+        <li>
+          <code>echo</code> — 문자열을 출력하는 명령 (유틸리티/셸 내장 둘 다
+          가능)
+        </li>
+        <li>
+          <code>print</code> — 옵션을 제공하여 <code>echo</code>보다 유연하게
+          사용 가능
+        </li>
+      </ul>
+
+      <h2>셸 특수 문자</h2>
+      <ul>
+        <li><code>*</code> — 임의의 문자열</li>
+        <li><code>?</code> — 임의의 한 문자</li>
+        <li><code>[ ]</code> — 대괄호 안의 문자 중 하나</li>
+        <li><code>~</code> — 사용자의 홈 디렉토리</li>
+        <li><code>-</code> — 이전 작업 디렉토리</li>
+        <li><code>;</code> — 여러 명령을 한 줄에 연결</li>
+        <li>
+          <code>|</code> — 앞 명령의 출력을 뒤 명령의 입력으로 전달 (파이프)
+        </li>
+        <li><code>' '</code> — 내부 특수문자 해석하지 않음</li>
+        <li>
+          <code>" "</code> — <code>$</code>, <code>`</code>, <code>\</code>를
+          제외하고 해석 안 함
+        </li>
+        <li><code>` `</code> — 명령 실행 결과를 문자열로 받음</li>
+        <li><code>\</code> — 특수문자의 의미 제거 (이스케이프)</li>
+        <li>
+          <code>&gt;</code>, <code>&gt;&gt;</code>, <code>&lt;</code> — 입출력
+          방향 변경
+        </li>
+      </ul>
+
+      <hr />
+
+      <h1>2. 입출력 방향 변경</h1>
+
+      <p>
+        유닉스는 프로그램의 입력과 출력을 “표준 입출력 장치”로 처리하며,
+        리다이렉션(redirection)을 통해 파일이나 다른 명령으로 입출력을 전환할 수
+        있다.
+      </p>
+
+      <h2>표준 입출력 장치</h2>
+      <ul>
+        <li>표준 입력(stdin): 키보드</li>
+        <li>표준 출력(stdout): 화면</li>
+        <li>표준 오류(stderr): 오류 메시지 출력용</li>
+      </ul>
+
+      <h2>리다이렉션 기호</h2>
+      <ul>
+        <li>
+          <code>명령 &gt; 파일</code> — 출력 결과를 파일에 저장 (덮어쓰기)
+        </li>
+        <li><code>명령 &gt;&gt; 파일</code> — 출력 결과를 파일 끝에 추가</li>
+        <li><code>명령 2&gt; 파일</code> — 오류 메시지를 파일로 저장</li>
+        <li><code>명령 &lt; 파일</code> — 입력을 키보드 대신 파일에서 읽음</li>
+      </ul>
+
+      <hr />
+
+      <h1>3. 배시 셸의 환경 설정</h1>
+
+      <p>
+        환경 변수(Environment Variable)는 시스템이나 셸이 사용하는 설정값을
+        저장한다.
+        <code>bash</code>에서는 셸 변수와 환경 변수를 구분해 사용한다.
+      </p>
+
+      <h2>변수 종류 및 확인</h2>
+      <ul>
+        <li>셸 변수 — 현재 셸에서만 유효 (<code>set</code> 명령으로 확인)</li>
+        <li>
+          환경 변수 — 모든 셸에서 사용 가능 (<code>env</code> 명령으로 확인)
+        </li>
+        <li>변수 출력 — <code>echo $변수명</code></li>
+      </ul>
+
+      <h2>변수 정의와 해제</h2>
+      <ul>
+        <li>셸 변수 정의: <code>변수명=값</code></li>
+        <li>
+          환경 변수 정의: <code>export 변수명=값</code> 또는
+          <code>변수명=값; export 변수명</code>
+        </li>
+        <li>변수 해제: <code>unset 변수명</code></li>
+      </ul>
+
+      <p>
+        <strong>자주 사용하는 Ctrl 키:</strong> <code>Ctrl+C</code> (명령 중단)
+      </p>
+
+      <hr />
+
+      <h1>4. 배시 셸 명령 다루기</h1>
+
+      <h2>명령 단축 — alias</h2>
+      <ul>
+        <li>
+          <code>alias 별칭='명령'</code> — 긴 명령이나 자주 쓰는 옵션을 짧게
+          지정
+        </li>
+        <li><code>unalias 별칭</code> — 별칭 삭제</li>
+        <li>
+          인자를 전달해야 할 경우, 별칭 대신 <strong>함수(function)</strong>를
+          사용
+        </li>
+      </ul>
+
+      <h2>명령 이력(history) 활용</h2>
+      <ul>
+        <li><code>fc</code> — 이전 명령 목록 보기</li>
+        <li><code>!</code> — 직전 명령 또는 특정 명령 재실행</li>
+        <li>↑ / ↓ — 이전 또는 다음 명령 불러오기</li>
+        <li>
+          <code>Esc + /</code> — 명령 이력에서 문자열 검색 (vim 스타일 탐색)
+        </li>
+      </ul>
+
+      <hr />
+
+      <h1>5. 프롬프트 설정하기</h1>
+
+      <p>
+        프롬프트(prompt)는 명령 입력 대기 상태를 표시하며,
+        <code>PS1</code> 환경 변수로 모양을 바꿀 수 있다.
+      </p>
+
+      <h2>기본 프롬프트 기호</h2>
+      <ul>
+        <li><code>$</code> — bash, sh, ksh</li>
+        <li><code>%</code> — csh</li>
+      </ul>
+
+      <h2>PS1 설정 예시</h2>
+      <ul>
+        <li><code>PS1="Unix$ "</code> — 문자열로 변경</li>
+        <li><code>PS1="\u@\h:\w\$ "</code> — 사용자명@호스트:현재경로</li>
+        <li><code>PS1="\t \$ "</code> — 시간 표시 추가</li>
+      </ul>
+
+      <h2>컬러 프롬프트 구성요소</h2>
+      <ul>
+        <li><code>\u</code> — 사용자명 / <code>\h</code> — 호스트명</li>
+        <li><code>\w</code> — 현재 디렉토리 / <code>\t</code> — 시각</li>
+        <li><code>\!</code> — 명령 이력 번호</li>
+        <li><code>\e</code> — 이스케이프 문자로 색상 제어</li>
+      </ul>
+
+      <hr />
+
+      <h1>6. 환경 설정 파일 설정하기</h1>
+
+      <p>
+        로그인 시 자동 실행되는 설정 파일을 통해 사용자별 환경을 구성할 수 있다.
+      </p>
+
+      <h2>환경 설정 파일의 종류</h2>
+      <ul>
+        <li>
+          <strong>시스템 초기화 파일</strong> — 관리자용 환경 초기화 (<code
+            >/etc/profile</code
+          >
+          등)
+        </li>
+        <li>
+          <strong>사용자 초기화 파일</strong> — 개인별 설정
+          (<code>~/.profile</code>, <code>~/.bashrc</code>)
+        </li>
+      </ul>
+
+      <h2>설정 파일 편집 및 적용</h2>
+      <ul>
+        <li>
+          <code>.bashrc</code> — 앨리어스, 프롬프트, 경로 등 개인 설정 저장
+        </li>
+        <li><code>source ~/.bashrc</code> — 설정 파일 다시 실행 (변경 적용)</li>
+        <li><code>~/.profile</code> — 로그인 시 한 번만 실행되는 설정 파일</li>
+      </ul>
+
+      <h2>실습 요약</h2>
+      <ul>
+        <li>홈 디렉토리 이동 후 <code>.bashrc</code> 수정</li>
+        <li>프롬프트, 환경 변수, 앨리어스 설정 추가</li>
+        <li>저장 후 <code>source .bashrc</code> 명령으로 실행</li>
+      </ul>
+
+      <hr />
+
+      <h1>요약</h1>
+      <ul>
+        <li>
+          셸은 명령을 해석하고 실행하는 인터페이스로, bash는 대표적인 유닉스
+          셸이다.
+        </li>
+        <li>리다이렉션으로 입출력 방향을 자유롭게 변경할 수 있다.</li>
+        <li>
+          환경 변수와 alias를 통해 효율적이고 개인화된 환경을 구성할 수 있다.
+        </li>
+        <li>PS1 설정으로 프롬프트 모양과 색상을 변경할 수 있다.</li>
+        <li>
+          환경 설정 파일(
+          <code>.bashrc</code>, <code>.profile</code>
+          )을 수정하여 자동화된 셸 환경을 만들 수 있다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

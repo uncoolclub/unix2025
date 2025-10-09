@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6장 — 파일 접근 권한 관리하기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter05.html">← 이전 챕터</a>
+      <a href="chapter07.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 파일의 속성</h1>
+
+      <p>
+        유닉스는 다중 사용자 시스템으로, 각 파일에는 접근을 제어하기 위한 속성과
+        권한이 있다.
+        <code>ls -l</code> 명령을 통해 파일의 종류, 권한, 소유자, 그룹, 크기,
+        수정 시간을 확인할 수 있다.
+      </p>
+
+      <h2>파일의 기본 속성</h2>
+      <ul>
+        <li>
+          파일 종류 — 일반 파일, 디렉토리, 장치 파일, 링크, 파이프, 소켓 등
+        </li>
+        <li>접근 권한 — 읽기(r), 쓰기(w), 실행(x)</li>
+        <li>하드 링크 수</li>
+        <li>파일 소유자 및 그룹</li>
+        <li>파일 크기 (byte)</li>
+        <li>마지막 수정 일시</li>
+      </ul>
+
+      <h2>파일 종류의 표시 예시</h2>
+      <ul>
+        <li><code>-</code> : 일반 파일</li>
+        <li><code>d</code> : 디렉토리</li>
+        <li><code>b</code> : 블록 장치 파일</li>
+        <li><code>c</code> : 문자 장치 파일</li>
+        <li><code>l</code> : 심볼릭 링크</li>
+        <li><code>p</code> : 파이프</li>
+        <li><code>s</code> : 소켓</li>
+      </ul>
+
+      <hr />
+
+      <h1>2. 파일의 접근 권한</h1>
+
+      <p>
+        파일 접근 권한은 사용자가 해당 파일을 읽거나, 쓰거나, 실행할 수 있는지를
+        제어한다. 이는 유닉스의 기본적인 보안 기능으로, 사용자 유형별로 권한을
+        다르게 설정할 수 있다.
+      </p>
+
+      <h2>사용자 카테고리</h2>
+      <ul>
+        <li><strong>소유자 (u)</strong> — 파일을 생성한 사용자</li>
+        <li><strong>그룹 (g)</strong> — 동일 그룹에 속한 사용자들</li>
+        <li><strong>기타 사용자 (o)</strong> — 나머지 모든 사용자</li>
+      </ul>
+
+      <h2>접근 권한의 의미</h2>
+      <ul>
+        <li>
+          <code>r</code> — 읽기(Read): 파일 내용 조회 또는 디렉토리 목록 보기
+        </li>
+        <li>
+          <code>w</code> — 쓰기(Write): 파일 수정 또는 디렉토리 내 파일
+          생성/삭제
+        </li>
+        <li>
+          <code>x</code> — 실행(Execute): 프로그램 실행 또는 디렉토리 진입
+        </li>
+      </ul>
+
+      <h2>권한 표기 예시</h2>
+      <pre><code>-rw-r--r--   (소유자: rw-, 그룹: r--, 기타: r--)</code></pre>
+
+      <hr />
+
+      <h1>3. 기호를 이용한 접근 권한 변경</h1>
+
+      <p>
+        파일의 소유자는 <code>chmod</code> 명령으로 접근 권한을 변경할 수 있다.
+        기호 모드(Symbolic mode)는 사용자 그룹과 연산자, 권한 문자를 조합하여
+        사용한다.
+      </p>
+
+      <h2>기호 모드 구성</h2>
+      <ul>
+        <li>
+          <strong>사용자 카테고리</strong>: <code>u</code>(소유자),
+          <code>g</code>(그룹), <code>o</code>(기타), <code>a</code>(전체)
+        </li>
+        <li>
+          <strong>연산자</strong>: <code>+</code>(권한 추가),
+          <code>-</code>(권한 제거), <code>=</code>(지정)
+        </li>
+        <li>
+          <strong>권한 문자</strong>: <code>r</code>, <code>w</code>,
+          <code>x</code>
+        </li>
+      </ul>
+
+      <h2>예시</h2>
+      <pre><code>$ chmod u+w file.txt      # 소유자에게 쓰기 권한 추가
+$ chmod g+x file.txt      # 그룹에 실행 권한 추가
+$ chmod o=r file.txt      # 기타 사용자에게 읽기만 허용
+$ chmod a+x file.txt      # 모든 사용자에게 실행 권한 추가</code></pre>
+
+      <h2>[실습 6-1] 기호 모드로 권한 변경</h2>
+      <ul>
+        <li>파일 생성 및 권한 확인 (<code>ls -l</code>)</li>
+        <li><code>u-w</code>, <code>g+wx</code> 등의 명령으로 권한 수정</li>
+        <li>디렉토리 내 권한 일괄 변경 시 <code>-R</code> 옵션 사용</li>
+      </ul>
+
+      <hr />
+
+      <h1>4. 숫자를 이용한 접근 권한 변경</h1>
+
+      <p>
+        숫자 모드(8진수 모드)는 각 사용자 범주의 접근 권한을 숫자로 표현하여 한
+        번에 설정할 수 있다.
+      </p>
+
+      <h2>8진수 표현 규칙</h2>
+      <table>
+        <tr>
+          <th>기호</th>
+          <th>2진수</th>
+          <th>8진수</th>
+          <th>의미</th>
+        </tr>
+        <tr>
+          <td>rwx</td>
+          <td>111</td>
+          <td>7</td>
+          <td>읽기, 쓰기, 실행</td>
+        </tr>
+        <tr>
+          <td>rw-</td>
+          <td>110</td>
+          <td>6</td>
+          <td>읽기, 쓰기</td>
+        </tr>
+        <tr>
+          <td>r-x</td>
+          <td>101</td>
+          <td>5</td>
+          <td>읽기, 실행</td>
+        </tr>
+        <tr>
+          <td>r--</td>
+          <td>100</td>
+          <td>4</td>
+          <td>읽기</td>
+        </tr>
+        <tr>
+          <td>--x</td>
+          <td>001</td>
+          <td>1</td>
+          <td>실행</td>
+        </tr>
+        <tr>
+          <td>---</td>
+          <td>000</td>
+          <td>0</td>
+          <td>권한 없음</td>
+        </tr>
+      </table>
+
+      <h2>예시</h2>
+      <pre><code>$ chmod 755 script.sh    # rwxr-xr-x
+$ chmod 644 memo.txt     # rw-r--r--
+$ chmod 700 secret.txt   # rwx------</code></pre>
+
+      <h2>[실습 6-2] 숫자 모드 실습</h2>
+      <ul>
+        <li>권한 확인 후 755, 700, 644 등으로 변경</li>
+        <li>숫자 모드가 기호 모드보다 빠르고 직관적임</li>
+      </ul>
+
+      <hr />
+
+      <h1>5. 기본 접근 권한 설정 (umask)</h1>
+
+      <p>
+        파일이나 디렉토리를 새로 생성할 때 자동으로 부여되는 기본 권한은
+        <strong>umask</strong> 값에 따라 결정된다.
+      </p>
+
+      <h2>기본 권한</h2>
+      <ul>
+        <li>일반 파일: <code>666 (rw-rw-rw-)</code></li>
+        <li>실행 파일/디렉토리: <code>777 (rwxrwxrwx)</code></li>
+      </ul>
+
+      <h2>umask의 개념</h2>
+      <p>
+        umask는 “허용하지 않을 권한”을 지정하는 값이다. 기본 권한에서 umask 값을
+        뺀 결과가 실제 권한이 된다.
+      </p>
+
+      <h2>계산 예시</h2>
+      <pre><code>기본 권한: 666
+umask: 022
+결과: 644 (rw-r--r--)
+
+기본 권한: 777
+umask: 022
+결과: 755 (rwxr-xr-x)</code></pre>
+
+      <h2>[실습 6-3] 기본 접근 권한 변경</h2>
+      <ul>
+        <li><code>umask</code> 명령으로 현재 값 확인</li>
+        <li><code>umask 027</code> 등으로 변경 후 새 파일 생성</li>
+        <li>새 파일과 디렉토리의 기본 권한이 달라짐을 확인</li>
+      </ul>
+
+      <hr />
+
+      <h1>요약</h1>
+      <ul>
+        <li>파일의 속성과 접근 권한은 유닉스의 핵심 보안 기능이다.</li>
+        <li>
+          권한은 소유자, 그룹, 기타 사용자별로 <code>r</code>, <code>w</code>,
+          <code>x</code>로 구분된다.
+        </li>
+        <li>
+          <code>chmod</code> 명령으로 기호 또는 숫자 모드로 권한을 변경할 수
+          있다.
+        </li>
+        <li>
+          <code>umask</code>를 이용해 새 파일의 기본 권한을 제어할 수 있다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

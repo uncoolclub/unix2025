@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3장 — 파일 다루기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter02.html">← 이전 챕터</a>
+      <a href="chapter04.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>
+        1. 파일 내용 보기 : <code>cat</code> / <code>more</code> /
+        <code>tail</code>
+      </h1>
+
+      <h2><code>cat</code> — 짧은 파일 내용 보기</h2>
+      <ul>
+        <li>간단한 텍스트 파일을 한 번에 출력하는 명령.</li>
+        <li><code>-n</code> 옵션: 행 번호 출력.</li>
+      </ul>
+
+      <pre><code>cat [옵션] 파일명
+cat -n memo.txt    # 행 번호와 함께 내용 출력</code></pre>
+
+      <h2><code>more</code> — 한 화면씩 내용 보기</h2>
+      <ul>
+        <li>긴 파일을 페이지 단위로 출력.</li>
+        <li>
+          다음 페이지: <kbd>Space</kbd> / 이전 페이지: <kbd>b</kbd> / 종료:
+          <kbd>q</kbd> / 문자열 찾기: <kbd>/문자열</kbd>
+        </li>
+        <li><code>+행번호</code> 옵션: 지정한 행부터 출력.</li>
+      </ul>
+
+      <pre><code>more [옵션] 파일명
+more +50 longfile.txt</code></pre>
+
+      <h2><code>tail</code> — 마지막 부분 출력</h2>
+      <ul>
+        <li>파일의 끝부분을 일정 행 수만큼 보여줌.</li>
+        <li><code>+행번호</code>: 지정 행부터 끝까지 출력.</li>
+        <li><code>-숫자</code>: 마지막 N행 출력.</li>
+        <li>
+          <code>-f</code>: 파일이 갱신될 때마다 실시간 출력(로그 모니터링).
+        </li>
+      </ul>
+
+      <pre><code>tail -10 syslog.log   # 마지막 10행 출력
+tail -f access.log    # 로그 실시간 보기</code></pre>
+
+      <h3>[실습 3-1] 파일 내용 보기와 검색</h3>
+      <ol>
+        <li>작업 디렉토리 생성: <code>mkdir ~/file_test</code></li>
+        <li>파일 복사: <code>cp /etc/passwd .</code></li>
+        <li>파일 내용 보기: <code>cat passwd</code></li>
+        <li>내용 검색: <code>grep "root" passwd</code></li>
+        <li>다음 검색: <kbd>n</kbd></li>
+        <li>종료: <kbd>q</kbd></li>
+      </ol>
+
+      <hr />
+
+      <h1>2. 파일 복사 : <code>cp</code></h1>
+      <ul>
+        <li>파일이나 디렉토리를 복사하는 명령.</li>
+        <li>
+          주요 옵션:
+          <ul>
+            <li><code>-i</code>: 덮어쓰기 전에 확인.</li>
+            <li><code>-r</code>: 디렉토리 전체 복사.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <pre><code>cp [옵션] 원본 대상
+cp file1 file2             # 파일 복사
+cp file1 file2 dir/        # 여러 파일을 디렉토리에 복사
+cp -r dir1 dir2            # 디렉토리 복사</code></pre>
+
+      <hr />
+
+      <h1>3. 파일 삭제 : <code>rm</code></h1>
+      <ul>
+        <li>지정한 파일 또는 디렉토리를 삭제.</li>
+        <li>주의: 삭제한 파일은 복구할 수 없음!</li>
+        <li>
+          옵션:
+          <ul>
+            <li><code>-i</code>: 삭제 전 확인.</li>
+            <li><code>-f</code>: 강제 삭제.</li>
+            <li><code>-r</code>: 디렉토리 전체 삭제.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <pre><code>rm file1
+rm -i file2
+rm -r old_dir</code></pre>
+
+      <hr />
+
+      <h1>4. 파일 이동 및 이름 변경 : <code>mv</code></h1>
+      <ul>
+        <li>파일이나 디렉토리의 이름을 변경하거나 다른 디렉토리로 이동.</li>
+        <li>
+          옵션:
+          <ul>
+            <li><code>-i</code>: 덮어쓰기 전에 확인.</li>
+            <li><code>-f</code>: 강제 이동.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <pre><code>mv [옵션] 원본 새이름
+mv file1 file2        # 이름 변경
+mv file1 dir/         # 파일을 다른 디렉토리로 이동
+mv dir1 dir2          # 디렉토리 이름 변경</code></pre>
+
+      <h3>[실습 3-2] 이동/삭제하기</h3>
+      <ol>
+        <li>작업 디렉토리 만들기: <code>mkdir ~/move_test</code></li>
+        <li>파일 이동: <code>mv test1.txt move_test/</code></li>
+        <li>디렉토리 이름 바꾸기: <code>mv move_test backup_dir</code></li>
+        <li>디렉토리 삭제: <code>rm -r backup_dir</code></li>
+      </ol>
+
+      <hr />
+
+      <h1>5. 파일 링크 : <code>ln</code></h1>
+      <ul>
+        <li>한 파일에 대해 또 다른 이름(링크)을 생성.</li>
+        <li>
+          종류:
+          <ul>
+            <li>
+              하드 링크: 동일 파일의 또 다른 이름. 둘 중 하나를 수정하면 동일
+              내용.
+            </li>
+            <li>
+              심볼릭 링크(<code>-s</code>): 경로를 가리키는 별도 파일 (윈도우의
+              바로가기와 유사).
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <pre><code>ln file1 file2        # 하드 링크
+ln -s file1 link1     # 심볼릭 링크</code></pre>
+
+      <p>
+        <strong>복사(<code>cp</code>)와 링크(<code>ln</code>)의 차이</strong>
+      </p>
+      <table border="1" cellspacing="0" cellpadding="6">
+        <tr>
+          <th>cp</th>
+          <th>ln</th>
+        </tr>
+        <tr>
+          <td>별도의 독립된 복사본 생성</td>
+          <td>원본 파일을 참조 (공유)</td>
+        </tr>
+        <tr>
+          <td>둘 중 하나 수정해도 다른 파일에 영향 없음</td>
+          <td>둘 중 하나 수정하면 내용이 함께 변경됨</td>
+        </tr>
+        <tr>
+          <td>독립 작업에 사용</td>
+          <td>공동 관리 목적에 사용</td>
+        </tr>
+      </table>
+
+      <hr />
+
+      <h1>6. 파일 생성 및 수정 시간 변경 : <code>touch</code></h1>
+      <ul>
+        <li>지정한 파일이 없으면 새로 생성, 있으면 접근/수정 시간을 변경.</li>
+        <li>
+          주요 옵션:
+          <ul>
+            <li><code>-a</code>: 접근 시간만 변경.</li>
+            <li><code>-m</code>: 수정 시간만 변경.</li>
+            <li><code>-c</code>: 존재하지 않으면 생성하지 않음.</li>
+            <li><code>-r ref_file</code>: 기준 파일의 시간으로 설정.</li>
+            <li><code>-t [[CC]YY]MMDDhhmm[.ss]</code>: 시간을 직접 지정.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <pre><code>touch newfile.txt
+touch -a existing.txt
+touch -t 202510091800 sample.txt</code></pre>
+
+      <hr />
+
+      <h1>요약</h1>
+      <ul>
+        <li>
+          <code>cat</code>, <code>more</code>, <code>tail</code>로 파일 내용을
+          확인할 수 있다.
+        </li>
+        <li>
+          <code>cp</code>로 복사, <code>rm</code>으로 삭제, <code>mv</code>로
+          이동 및 이름 변경을 수행한다.
+        </li>
+        <li>
+          <code>ln</code>으로 하드/심볼릭 링크를 생성해 파일을 공유하거나 관리할
+          수 있다.
+        </li>
+        <li>
+          <code>touch</code>로 파일을 새로 만들거나 수정·접근 시간을 변경할 수
+          있다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>
