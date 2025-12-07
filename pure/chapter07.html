@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7장 — 파일과 디렉토리 검색하기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter06.html">← 이전 챕터</a>
+      <a href="chapter08.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 파일 내용 검색: grep / egrep / fgrep</h1>
+
+      <p>
+        <code>grep</code> 명령어는 파일 내용에서 특정 패턴이나 문자열을 검색하는
+        도구이다. 정규 표현식을 지원하여 복잡한 패턴 검색이 가능하다.
+      </p>
+
+      <h2>grep 명령어</h2>
+      <p>
+        Global Regular Expression Print의 줄임말로, 파일에서 특정 패턴과
+        일치하는 행을 찾아 출력한다.
+      </p>
+
+      <h2>기본 문법</h2>
+      <pre><code>grep [옵션] 패턴 [파일...]</code></pre>
+
+      <h2>주요 옵션</h2>
+      <ul>
+        <li><code>-i</code> — 대소문자 구분하지 않음</li>
+        <li><code>-v</code> — 패턴과 일치하지 않는 행 출력</li>
+        <li><code>-n</code> — 행 번호와 함께 출력</li>
+        <li><code>-c</code> — 일치하는 행의 개수만 출력</li>
+        <li><code>-l</code> — 패턴이 포함된 파일명만 출력</li>
+        <li><code>-w</code> — 단어 단위로 정확히 일치하는 경우만 검색</li>
+        <li><code>-x</code> — 행 전체가 패턴과 일치하는 경우만 검색</li>
+      </ul>
+
+      <h2>사용 예시</h2>
+      <pre><code>grep "root" /etc/passwd        # passwd 파일에서 "root" 검색
+grep -i "error" log.txt        # 대소문자 무시하고 "error" 검색
+grep -n "function" script.sh   # 행 번호와 함께 "function" 검색
+grep -c "warning" *.log        # 모든 .log 파일에서 "warning" 개수 출력</code></pre>
+
+      <h2>egrep (확장 grep)</h2>
+      <p>
+        확장 정규 표현식을 사용할 수 있는 grep이다. <code>grep -E</code>와
+        동일하다.
+      </p>
+
+      <ul>
+        <li><code>+</code> — 앞 문자의 1회 이상 반복</li>
+        <li><code>?</code> — 앞 문자의 0회 또는 1회</li>
+        <li><code>|</code> — OR 연산자</li>
+        <li><code>()</code> — 그룹화</li>
+      </ul>
+
+      <pre><code>egrep "colou?r" file.txt       # "color" 또는 "colour" 검색
+egrep "(cat|dog)" animals.txt  # "cat" 또는 "dog" 검색</code></pre>
+
+      <h2>fgrep (고정 문자열 grep)</h2>
+      <p>
+        정규 표현식을 사용하지 않고 고정 문자열만 검색한다.
+        <code>grep -F</code>와 동일하다. 특수 문자를 문자 그대로 검색할 때
+        유용하다.
+      </p>
+
+      <pre><code>fgrep "*.txt" file.txt         # "*.txt" 문자열 그대로 검색
+fgrep -f patterns.txt data.txt # patterns.txt의 각 행을 패턴으로 검색</code></pre>
+
+      <hr />
+
+      <h1>2. 파일 검색: find</h1>
+
+      <p>
+        <code>find</code> 명령어는 파일 시스템에서 파일과 디렉토리를 검색하는
+        강력한 도구이다. 파일명, 크기, 수정 시간, 권한 등 다양한 조건으로 검색할
+        수 있다.
+      </p>
+
+      <h2>기본 문법</h2>
+      <pre><code>find [검색경로] [검색조건] [동작]</code></pre>
+
+      <h2>주요 검색 조건</h2>
+      <ul>
+        <li><code>-name 패턴</code> — 파일명으로 검색 (대소문자 구분)</li>
+        <li><code>-iname 패턴</code> — 파일명으로 검색 (대소문자 무시)</li>
+        <li><code>-type 타입</code> — 파일 타입으로 검색</li>
+        <li><code>-size 크기</code> — 파일 크기로 검색</li>
+        <li><code>-mtime 일수</code> — 수정 시간으로 검색</li>
+        <li><code>-perm 권한</code> — 파일 권한으로 검색</li>
+        <li><code>-user 사용자</code> — 소유자로 검색</li>
+        <li><code>-group 그룹</code> — 그룹으로 검색</li>
+      </ul>
+
+      <h2>파일 타입</h2>
+      <ul>
+        <li><code>f</code> — 일반 파일</li>
+        <li><code>d</code> — 디렉토리</li>
+        <li><code>l</code> — 심볼릭 링크</li>
+        <li><code>b</code> — 블록 장치</li>
+        <li><code>c</code> — 문자 장치</li>
+      </ul>
+
+      <h2>크기 지정</h2>
+      <ul>
+        <li><code>+크기</code> — 지정 크기보다 큰 파일</li>
+        <li><code>-크기</code> — 지정 크기보다 작은 파일</li>
+        <li><code>크기</code> — 정확히 지정 크기인 파일</li>
+        <li>
+          단위: <code>c</code>(바이트), <code>k</code>(킬로바이트),
+          <code>M</code>(메가바이트)
+        </li>
+      </ul>
+
+      <h2>기본 사용 예시</h2>
+      <pre><code>find . -name "*.txt"           # 현재 디렉토리에서 .txt 파일 검색
+find /home -type d -name "test"  # /home에서 test 디렉토리 검색
+find . -size +1M               # 1MB보다 큰 파일 검색
+find . -mtime -7               # 7일 이내 수정된 파일 검색
+find . -perm 755               # 권한이 755인 파일 검색</code></pre>
+
+      <h2>동작 옵션</h2>
+      <ul>
+        <li><code>-print</code> — 검색 결과 출력 (기본값)</li>
+        <li><code>-exec 명령 {} \;</code> — 검색된 파일에 명령 실행</li>
+        <li><code>-ok 명령 {} \;</code> — 실행 전 확인 후 명령 실행</li>
+        <li><code>-delete</code> — 검색된 파일 삭제</li>
+      </ul>
+
+      <h2>논리 연산자</h2>
+      <ul>
+        <li><code>-and</code> 또는 <code>-a</code> — AND 연산 (기본값)</li>
+        <li><code>-or</code> 또는 <code>-o</code> — OR 연산</li>
+        <li><code>-not</code> 또는 <code>!</code> — NOT 연산</li>
+      </ul>
+
+      <hr />
+
+      <h1>3. 명령어 검색: which</h1>
+
+      <p>
+        <code>which</code> 명령어는 PATH 환경변수에 설정된 경로에서 실행 파일의
+        위치를 찾는다. 셸에서 명령어를 실행할 때 실제로 사용되는 파일의 경로를
+        보여준다.
+      </p>
+
+      <h2>기본 문법</h2>
+      <pre><code>which [옵션] 명령어</code></pre>
+
+      <h2>주요 옵션</h2>
+      <ul>
+        <li><code>-a</code> — PATH에서 찾은 모든 실행 파일 경로 출력</li>
+      </ul>
+
+      <h2>사용 예시</h2>
+      <pre><code>which ls                       # ls 명령어의 위치 검색
+which python                   # python 실행 파일 위치 검색
+which -a gcc                   # 모든 gcc 실행 파일 위치 검색</code></pre>
+
+      <h3>type 명령어</h3>
+      <p>명령어의 타입을 확인한다 (내장 명령어, 별칭, 함수, 실행 파일).</p>
+
+      <pre><code>type ls                        # ls 명령어 타입 확인
+type cd                        # cd는 셸 내장 명령어
+type -a echo                   # echo의 모든 정의 확인</code></pre>
+
+      <hr />
+
+      <h1>요약</h1>
+      <ul>
+        <li>
+          <code>grep</code>, <code>egrep</code>, <code>fgrep</code>은 파일
+          내용에서 패턴을 검색하는 강력한 도구이다.
+        </li>
+        <li>
+          <code>find</code>는 파일 시스템에서 다양한 조건으로 파일과 디렉토리를
+          검색할 수 있다.
+        </li>
+        <li><code>which</code>는 PATH에서 명령어의 실행 파일 위치를 찾는다.</li>
+        <li>
+          이러한 검색 도구들을 조합하면 효율적인 파일 관리와 시스템 관리가
+          가능하다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

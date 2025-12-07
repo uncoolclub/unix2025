@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14장 — 시스템 관리 기초</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter13.html">← 이전 챕터</a>
+      <a href="chapter15.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 시스템 관리자 역할</h1>
+
+      <p>
+        시스템 관리자는 사용자 계정, 파일 시스템, 네트워크, 프로세스, 보안 등
+        시스템 전반을 안정적으로 운영하는 역할을 담당한다.
+      </p>
+
+      <ul>
+        <li>사용자 및 그룹 관리</li>
+        <li>권한 및 보안 설정</li>
+        <li>프로세스·서비스 관리</li>
+        <li>백업 및 복구</li>
+        <li>시스템 로그 모니터링</li>
+      </ul>
+
+      <hr />
+
+      <h1>2. 사용자와 그룹 관리</h1>
+
+      <h2>1) 사용자 계정 추가/변경/삭제</h2>
+
+      <pre><code>useradd username
+passwd username
+usermod -l 새이름 username
+userdel username</code></pre>
+
+      <h2>2) 그룹 관리</h2>
+
+      <pre><code>groupadd devteam
+groupmod -n 새그룹 devteam
+groupdel devteam</code></pre>
+
+      <h2>3) 주요 파일</h2>
+      <ul>
+        <li><code>/etc/passwd</code> — 사용자 정보</li>
+        <li><code>/etc/shadow</code> — 암호 정보</li>
+        <li><code>/etc/group</code> — 그룹 정보</li>
+      </ul>
+
+      <hr />
+
+      <h1>3. 파일 시스템 관리</h1>
+
+      <h2>마운트 / 언마운트</h2>
+      <pre><code>mount /dev/sdb1 /mnt/data
+umount /mnt/data</code></pre>
+
+      <h2>디스크 사용량 확인</h2>
+      <pre><code>df -h        # 파일 시스템 전체 사용량
+du -sh *     # 디렉토리별 사용량</code></pre>
+
+      <h2>파일 시스템 점검</h2>
+      <pre><code>fsck /dev/sda1</code></pre>
+
+      <h2>스왑 관리</h2>
+      <pre><code>swapon -s
+swapoff /swapfile</code></pre>
+
+      <hr />
+
+      <h1>4. 프로세스와 서비스 관리</h1>
+
+      <h2>프로세스 확인</h2>
+      <pre><code>ps -ef
+top</code></pre>
+
+      <h2>프로세스 종료</h2>
+      <pre><code>kill PID
+kill -9 PID       # 강제 종료</code></pre>
+
+      <h2>서비스 관리(systemctl)</h2>
+      <pre><code>systemctl status sshd
+systemctl start sshd
+systemctl stop sshd
+systemctl enable sshd</code></pre>
+
+      <hr />
+
+      <h1>5. 백업과 복구</h1>
+
+      <h2>tar</h2>
+      <ul>
+        <li><code>c</code> — 생성</li>
+        <li><code>x</code> — 압축 해제</li>
+        <li><code>v</code> — 진행 출력</li>
+        <li><code>f</code> — 파일 지정</li>
+      </ul>
+
+      <pre><code>tar cvf backup.tar /home/user
+tar xvf backup.tar</code></pre>
+
+      <h2>rsync</h2>
+      <pre><code>rsync -av /source /backup</code></pre>
+
+      <hr />
+
+      <h1>6. 로그 관리</h1>
+
+      <p>시스템 로그는 문제 진단과 보안 분석에 필수적이다.</p>
+
+      <ul>
+        <li><code>/var/log/messages</code> — 시스템 일반 로그</li>
+        <li><code>/var/log/auth.log</code> — 인증·로그인 기록</li>
+        <li><code>/var/log/secure</code> — 보안 관련</li>
+      </ul>
+
+      <h2>로그 확인</h2>
+      <pre><code>tail -f /var/log/messages</code></pre>
+
+      <hr />
+
+      <h1>7. 네트워크 관리</h1>
+
+      <h2>IP 확인</h2>
+      <pre><code>ifconfig
+ip addr</code></pre>
+
+      <h2>라우팅 확인</h2>
+      <pre><code>route -n
+ip route</code></pre>
+
+      <h2>네트워크 테스트</h2>
+      <pre><code>ping 8.8.8.8
+netstat -an
+ss -tuln</code></pre>
+
+      <hr />
+
+      <h1>요약</h1>
+
+      <ul>
+        <li>시스템 관리는 계정·파일 시스템·서비스·네트워크를 포함한다.</li>
+        <li>중요 파일: passwd, shadow, group, log 파일들.</li>
+        <li>백업은 tar/rsync 등이 핵심 도구.</li>
+        <li>시스템 로그 분석은 문제 해결에 필수이다.</li>
+        <li>mount/df/du/ps/systemctl 등은 관리자 필수 명령어들이다.</li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

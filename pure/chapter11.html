@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>11장 — 유닉스 유틸리티 이용하기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter10.html">← 이전 챕터</a>
+      <a href="chapter12.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 파일 정보 수집 — wc</h1>
+
+      <p>
+        <code>wc</code> 명령어는 파일의 라인 수, 단어 수, 문자 수를 확인할 때
+        사용한다.
+      </p>
+
+      <h3>옵션</h3>
+      <ul>
+        <li><code>-l</code> — 라인 수</li>
+        <li><code>-w</code> — 단어 수</li>
+        <li><code>-c</code> — 바이트 수</li>
+        <li><code>-m</code> — 문자 수</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>wc test.txt
+wc -l test.txt
+wc -w test.txt</code></pre>
+
+      <hr />
+
+      <h1>2. 파일 정렬 — sort</h1>
+
+      <p><code>sort</code> 명령어는 텍스트 파일 내용을 정렬한다.</p>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-r</code> — 역순 정렬</li>
+        <li><code>-u</code> — 중복 제거</li>
+        <li><code>-n</code> — 숫자 정렬</li>
+        <li><code>-d</code> — 사전순 정렬</li>
+        <li><code>-t 문자</code> — 필드 구분자 지정</li>
+        <li><code>-k N</code> — N번째 필드 기준 정렬</li>
+        <li><code>-o 파일명</code> — 결과를 파일로 저장</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>sort scores.txt
+sort -r scores.txt
+sort -t " " -k 2 students.txt
+sort -o result.txt scores.txt</code></pre>
+
+      <hr />
+
+      <h1>3. 파일 분할 — split</h1>
+
+      <p><code>split</code> 명령어는 큰 파일을 여러 조각으로 분할한다.</p>
+
+      <h3>옵션</h3>
+      <ul>
+        <li><code>-l N</code> — N줄씩 분할</li>
+        <li><code>-b 크기</code> — 지정한 바이트 단위로 분할</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>split -l 1000 data.txt
+split -b 1m logfile.txt</code></pre>
+
+      <hr />
+
+      <h1>4. 중복 삭제 — uniq</h1>
+
+      <p><code>uniq</code> 명령어는 연속된 중복 라인을 제거한다.</p>
+
+      <h3>옵션</h3>
+      <ul>
+        <li><code>-c</code> — 중복 횟수 표시</li>
+        <li><code>-d</code> — 중복된 행만 출력</li>
+        <li><code>-u</code> — 중복되지 않은 행만 출력</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>uniq names.txt
+sort names.txt | uniq -c
+uniq -d names.txt</code></pre>
+
+      <hr />
+
+      <h1>5. 필드 추출 — cut</h1>
+
+      <p><code>cut</code> 명령어는 파일에서 특정 필드 또는 문자를 잘라낸다.</p>
+
+      <h3>옵션</h3>
+      <ul>
+        <li><code>-c 위치</code> — 특정 문자 위치</li>
+        <li><code>-f 필드</code> — 특정 필드</li>
+        <li><code>-d 문자</code> — 필드 구분자 지정</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>cut -c 1-5 text.txt
+cut -d " " -f 1,3 data.txt</code></pre>
+
+      <hr />
+
+      <h1>6. 파일 연결 — paste</h1>
+
+      <p><code>paste</code> 명령어는 여러 파일을 줄 단위로 붙인다.</p>
+
+      <h3>옵션</h3>
+      <ul>
+        <li><code>-d 문자</code> — 필드 구분자 지정</li>
+        <li><code>-s</code> — 수평으로 붙이기</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>paste file1 file2
+paste -d ":" file1 file2
+paste -s file1</code></pre>
+
+      <hr />
+
+      <h1>7. 파일 덤프 — dd</h1>
+
+      <p>
+        <code>dd</code> 명령어는 데이터를 변환하거나 특정 블록 단위로 복사할 때
+        사용한다.
+      </p>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>if=파일</code> — 입력 파일</li>
+        <li><code>of=파일</code> — 출력 파일</li>
+        <li><code>bs=N</code> — 블록 크기</li>
+        <li><code>conv=lcase</code> — 소문자로 변환</li>
+        <li><code>conv=ucase</code> — 대문자로 변환</li>
+      </ul>
+
+      <h3>예시</h3>
+      <pre><code>dd if=input.txt of=output.txt bs=1m
+dd if=source.txt of=lower.txt conv=lcase</code></pre>
+
+      <hr />
+
+      <h1>요약</h1>
+      <ul>
+        <li><code>wc</code> — 파일 라인·단어·문자 정보 확인</li>
+        <li><code>sort</code> — 파일 정렬 및 중복 제거</li>
+        <li><code>split</code> — 파일 분할</li>
+        <li><code>uniq</code> — 연속 중복 라인 제거</li>
+        <li><code>cut</code> — 특정 필드 또는 문자 추출</li>
+        <li><code>paste</code> — 여러 파일을 줄 단위로 결합</li>
+        <li><code>dd</code> — 파일 변환 및 블록 단위 복사</li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

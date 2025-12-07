@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>15장 — DOS 기본 명령</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter14.html">← 이전 챕터</a>
+      <a href="index.html">홈으로 →</a>
+    </nav>
+
+    <main>
+      <h1>1. DOS의 개요</h1>
+
+      <p>
+        DOS(Disk Operating System)는 명령어 기반 운영체제로, 파일 관리, 프로그램
+        실행, 하드웨어 초기화를 담당한다.
+      </p>
+
+      <ul>
+        <li>명령 프롬프트에서 문자 기반으로 명령을 입력하여 사용</li>
+        <li>파일 확장자 중심의 파일 관리(.exe, .com, .bat 등)</li>
+      </ul>
+
+      <hr />
+
+      <h1>2. 기본 명령어</h1>
+
+      <h2>1) 화면 및 디렉토리 관련</h2>
+
+      <pre><code>cls               # 화면 지우기
+dir               # 디렉토리 목록
+dir /p            # 페이지 단위 출력
+dir /w            # 넓게 출력</code></pre>
+
+      <h2>2) 디렉토리 이동</h2>
+      <pre><code>cd 폴더명
+cd ..             # 상위 디렉토리
+cd \              # 루트 디렉토리</code></pre>
+
+      <h2>3) 디렉토리 생성/삭제</h2>
+      <pre><code>mkdir data
+rmdir data</code></pre>
+
+      <hr />
+
+      <h1>3. 파일 관리 명령</h1>
+
+      <h2>파일 복사</h2>
+      <pre><code>copy a.txt b.txt
+copy *.txt backup\</code></pre>
+
+      <h2>파일 삭제</h2>
+      <pre><code>del  a.txt
+del *.tmp</code></pre>
+
+      <h2>파일 이름 변경</h2>
+      <pre><code>ren old.txt new.txt</code></pre>
+
+      <h2>파일 내용 보기</h2>
+      <pre><code>type memo.txt
+more memo.txt</code></pre>
+
+      <hr />
+
+      <h1>4. 실행 파일과 배치 파일</h1>
+
+      <h2>실행 파일 종류</h2>
+      <ul>
+        <li><code>.exe</code> — 실행 파일</li>
+        <li><code>.com</code> — 간단한 실행 파일</li>
+        <li><code>.bat</code> — 배치(일괄 처리) 파일</li>
+      </ul>
+
+      <h2>배치 파일 예시</h2>
+      <pre><code>@echo off
+echo 백업 시작
+copy *.txt backup\
+echo 완료</code></pre>
+
+      <hr />
+
+      <h1>5. 디스크 관리 명령</h1>
+
+      <h2>디스크 상태</h2>
+      <pre><code>chkdsk</code></pre>
+
+      <h2>디스크 포맷</h2>
+      <pre><code>format A:</code></pre>
+
+      <h2>부팅 디스크 생성</h2>
+      <pre><code>sys A:</code></pre>
+
+      <hr />
+
+      <h1>6. 환경 설정</h1>
+
+      <h2>환경 변수</h2>
+      <pre><code>set PATH=C:\bin;%PATH%
+set TEMP=C:\TEMP</code></pre>
+
+      <h2>AUTOEXEC.BAT / CONFIG.SYS</h2>
+      <p>DOS 부팅 시 자동 실행되는 환경 설정 파일</p>
+
+      <hr />
+
+      <h1>7. 검색 및 필터링</h1>
+
+      <h2>파일 검색</h2>
+      <pre><code>dir /s keyword*</code></pre>
+
+      <h2>파이프 사용</h2>
+      <pre><code>dir | more</code></pre>
+
+      <hr />
+
+      <h1>8. 도움말</h1>
+
+      <pre><code>help
+help command</code></pre>
+
+      <hr />
+
+      <h1>요약</h1>
+
+      <ul>
+        <li>
+          DOS는 텍스트 기반 운영체제로 단순하지만 빠르고 가벼운 파일 관리가
+          가능하다.
+        </li>
+        <li>dir, cd, copy, del 등은 기본적인 파일·폴더 관리 명령이다.</li>
+        <li>배치 파일(.bat)을 이용하면 반복 작업을 자동화할 수 있다.</li>
+        <li>chkdsk, format 등으로 디스크 관리가 가능하다.</li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>

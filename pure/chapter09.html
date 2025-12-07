@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9장 — 파일 아카이브와 압축 명령 익히기</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>유닉스 개론</h1>
+        <div class="user-info">
+          <span>25102163</span>
+          <span>양수빈</span>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <a href="chapter08.html">← 이전 챕터</a>
+      <a href="chapter10.html">다음 챕터 →</a>
+    </nav>
+
+    <main>
+      <h1>1. 파일 아카이브 (tar)</h1>
+
+      <p>
+        <code>tar</code>(Tape ARchive) 명령어는 여러 파일과 디렉토리를 하나의
+        아카이브 파일로 묶는 도구이다. 원래는 테이프 백업용으로 개발되었지만,
+        현재는 파일 묶기와 백업의 표준 도구로 사용된다.
+      </p>
+
+      <h2>기본 문법</h2>
+      <pre><code>tar [옵션] [아카이브파일] [파일/디렉토리...]</code></pre>
+
+      <h2>주요 옵션</h2>
+      <ul>
+        <li><code>-c</code> — 새로운 아카이브 생성 (create)</li>
+        <li><code>-x</code> — 아카이브에서 파일 추출 (extract)</li>
+        <li><code>-t</code> — 아카이브 내용 목록 보기 (list)</li>
+        <li><code>-v</code> — 상세 정보 출력 (verbose)</li>
+        <li><code>-f</code> — 아카이브 파일명 지정 (file)</li>
+        <li><code>-z</code> — gzip 압축/해제와 함께 사용</li>
+        <li><code>-j</code> — bzip2 압축/해제와 함께 사용</li>
+        <li><code>-r</code> — 아카이브에 파일 추가</li>
+        <li><code>-u</code> — 변경된 파일만 추가 (update)</li>
+      </ul>
+
+      <h2>아카이브 생성</h2>
+      <pre><code>tar -cf archive.tar file1 file2 dir1    # 아카이브 생성
+tar -cvf backup.tar /home/user          # 상세 정보와 함께 아카이브 생성
+tar -czf archive.tar.gz dir1            # gzip 압축과 함께 아카이브 생성
+tar -cjf archive.tar.bz2 dir1           # bzip2 압축과 함께 아카이브 생성</code></pre>
+
+      <h2>아카이브 추출</h2>
+      <pre><code>tar -xf archive.tar                     # 아카이브 추출
+tar -xvf archive.tar                    # 상세 정보와 함께 추출
+tar -xzf archive.tar.gz                 # gzip 압축 해제와 함께 추출
+tar -xjf archive.tar.bz2                # bzip2 압축 해제와 함께 추출
+tar -xf archive.tar -C /tmp             # 특정 디렉토리에 추출</code></pre>
+
+      <h2>아카이브 내용 확인</h2>
+      <pre><code>tar -tf archive.tar                     # 아카이브 내용 목록
+tar -tvf archive.tar                    # 상세 정보와 함께 목록 출력
+tar -tzf archive.tar.gz                 # gzip 압축 파일 내용 목록</code></pre>
+
+      <h2>기타 작업</h2>
+      <pre><code>tar -rf archive.tar newfile.txt         # 아카이브에 파일 추가
+tar -uf archive.tar dir1                # 변경된 파일만 업데이트</code></pre>
+
+      <hr />
+
+      <h1>2. 파일 아카이브와 압축 (jar)</h1>
+
+      <p>
+        <code>jar</code>(Java ARchive) 명령어는 Java 플랫폼에서 사용되는
+        아카이브 도구이다. ZIP 파일 형식을 기반으로 하며, Java 클래스 파일과
+        관련 리소스를 패키징할 때 주로 사용된다.
+      </p>
+
+      <h2>기본 문법</h2>
+      <pre><code>jar [옵션] [jar파일] [파일/디렉토리...]</code></pre>
+
+      <h2>주요 옵션</h2>
+      <ul>
+        <li><code>-c</code> — 새로운 아카이브 생성 (create)</li>
+        <li><code>-x</code> — 아카이브에서 파일 추출 (extract)</li>
+        <li><code>-t</code> — 아카이브 내용 목록 보기 (list)</li>
+        <li><code>-v</code> — 상세 정보 출력 (verbose)</li>
+        <li><code>-f</code> — 아카이브 파일명 지정 (file)</li>
+        <li><code>-u</code> — 아카이브 업데이트</li>
+        <li><code>-m</code> — 매니페스트 파일 포함</li>
+        <li><code>-0</code> — 압축하지 않고 저장만</li>
+      </ul>
+
+      <h2>JAR 파일 생성</h2>
+      <pre><code>jar -cf myapp.jar *.class               # 클래스 파일들을 JAR로 생성
+jar -cvf myapp.jar com/                 # 디렉토리를 JAR로 생성 (상세 출력)
+jar -cvfm myapp.jar manifest.txt *.class # 매니페스트 파일과 함께 생성</code></pre>
+
+      <h2>JAR 파일 추출</h2>
+      <pre><code>jar -xf myapp.jar                       # JAR 파일 추출
+jar -xvf myapp.jar                      # 상세 정보와 함께 추출</code></pre>
+
+      <h2>JAR 파일 내용 확인</h2>
+      <pre><code>jar -tf myapp.jar                       # JAR 파일 내용 목록
+jar -tvf myapp.jar                      # 상세 정보와 함께 목록 출력</code></pre>
+
+      <h2>JAR 파일 업데이트</h2>
+      <pre><code>jar -uf myapp.jar newfile.class         # JAR 파일에 새 파일 추가</code></pre>
+
+      <hr />
+
+      <h1>3. .Z 파일 (compress / uncompress)</h1>
+
+      <p>
+        <code>compress</code>와 <code>uncompress</code>는 유닉스의 전통적인 압축
+        도구이다. LZW(Lempel-Ziv-Welch) 알고리즘을 사용하여 파일을 압축하며,
+        압축된 파일은 <code>.Z</code> 확장자를 가진다.
+      </p>
+
+      <h2>compress 명령어</h2>
+      <p>파일을 압축하여 <code>.Z</code> 파일을 생성한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>compress [옵션] 파일명</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-v</code> — 압축 정보 출력 (verbose)</li>
+        <li><code>-c</code> — 표준 출력으로 압축 결과 출력</li>
+        <li><code>-f</code> — 강제 압축 (기존 파일 덮어쓰기)</li>
+        <li><code>-b 비트수</code> — 압축 비트 수 지정 (9-16, 기본값 16)</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>compress file.txt                       # file.txt를 file.txt.Z로 압축
+compress -v file.txt                    # 압축 정보와 함께 압축
+compress -c file.txt > file.txt.Z       # 원본 파일 유지하며 압축</code></pre>
+
+      <h2>uncompress 명령어</h2>
+      <p><code>.Z</code> 파일을 압축 해제한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>uncompress [옵션] 파일명.Z</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-v</code> — 압축 해제 정보 출력</li>
+        <li><code>-c</code> — 표준 출력으로 압축 해제 결과 출력</li>
+        <li><code>-f</code> — 강제 압축 해제</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>uncompress file.txt.Z                   # file.txt.Z를 file.txt로 압축 해제
+uncompress -v file.txt.Z                # 압축 해제 정보와 함께 해제
+uncompress -c file.txt.Z > file.txt     # 원본 .Z 파일 유지하며 압축 해제</code></pre>
+
+      <hr />
+
+      <h1>4. .gz 파일 (gzip / gunzip)</h1>
+
+      <p>
+        <code>gzip</code>과 <code>gunzip</code>은 GNU에서 개발한 압축 도구이다.
+        Deflate 알고리즘을 사용하여 <code>compress</code>보다 더 효율적인 압축을
+        제공하며, 압축된 파일은 <code>.gz</code> 확장자를 가진다.
+      </p>
+
+      <h2>gzip 명령어</h2>
+      <p>파일을 압축하여 <code>.gz</code> 파일을 생성한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>gzip [옵션] 파일명</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-v</code> — 압축 정보 출력 (verbose)</li>
+        <li><code>-c</code> — 표준 출력으로 압축 결과 출력</li>
+        <li><code>-d</code> — 압축 해제 (decompress)</li>
+        <li><code>-f</code> — 강제 압축</li>
+        <li><code>-k</code> — 원본 파일 유지</li>
+        <li><code>-r</code> — 디렉토리 내 파일들을 재귀적으로 압축</li>
+        <li><code>-1 ~ -9</code> — 압축 레벨 (1: 빠름, 9: 최대 압축)</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>gzip file.txt                           # file.txt를 file.txt.gz로 압축
+gzip -v file.txt                        # 압축 정보와 함께 압축
+gzip -c file.txt > file.txt.gz          # 원본 파일 유지하며 압축
+gzip -9 file.txt                        # 최대 압축률로 압축
+gzip -r directory/                      # 디렉토리 내 파일들을 재귀적으로 압축</code></pre>
+
+      <h2>gunzip 명령어</h2>
+      <p><code>.gz</code> 파일을 압축 해제한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>gunzip [옵션] 파일명.gz</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-v</code> — 압축 해제 정보 출력</li>
+        <li><code>-c</code> — 표준 출력으로 압축 해제 결과 출력</li>
+        <li><code>-f</code> — 강제 압축 해제</li>
+        <li><code>-k</code> — 원본 .gz 파일 유지</li>
+        <li><code>-r</code> — 디렉토리 내 .gz 파일들을 재귀적으로 압축 해제</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>gunzip file.txt.gz                      # file.txt.gz를 file.txt로 압축 해제
+gunzip -v file.txt.gz                   # 압축 해제 정보와 함께 해제
+gunzip -c file.txt.gz > file.txt        # 원본 .gz 파일 유지하며 압축 해제
+gzip -d file.txt.gz                     # gzip -d로도 압축 해제 가능</code></pre>
+
+      <h2>zcat 명령어</h2>
+      <p>압축된 파일의 내용을 압축 해제하지 않고 직접 출력한다.</p>
+      <pre><code>zcat file.txt.gz                        # 압축 파일 내용을 화면에 출력
+zcat file.txt.gz | grep "pattern"       # 압축 파일에서 패턴 검색</code></pre>
+
+      <hr />
+
+      <h1>5. .zip 파일 (zip / unzip)</h1>
+
+      <p>
+        <code>zip</code>과 <code>unzip</code>은 널리 사용되는 압축 도구로,
+        Windows와 호환되는 ZIP 형식을 지원한다. 여러 파일과 디렉토리를 하나의
+        압축 파일로 묶을 수 있다.
+      </p>
+
+      <h2>zip 명령어</h2>
+      <p>파일과 디렉토리를 ZIP 형식으로 압축한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>zip [옵션] 압축파일명.zip 파일/디렉토리...</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-r</code> — 디렉토리를 재귀적으로 압축</li>
+        <li><code>-v</code> — 상세 정보 출력</li>
+        <li><code>-q</code> — 조용한 모드 (출력 최소화)</li>
+        <li><code>-u</code> — 변경된 파일만 업데이트</li>
+        <li><code>-f</code> — 새로운 파일만 추가</li>
+        <li><code>-d</code> — 압축 파일에서 파일 삭제</li>
+        <li><code>-1 ~ -9</code> — 압축 레벨 (1: 빠름, 9: 최대 압축)</li>
+        <li><code>-x 패턴</code> — 특정 패턴의 파일 제외</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>zip archive.zip file1.txt file2.txt     # 파일들을 ZIP으로 압축
+zip -r backup.zip directory/            # 디렉토리를 재귀적으로 압축
+zip -v archive.zip *.txt                # 상세 정보와 함께 압축
+zip -9 archive.zip largefile.txt        # 최대 압축률로 압축
+zip -r archive.zip . -x "*.tmp"         # .tmp 파일 제외하고 압축</code></pre>
+
+      <h2>unzip 명령어</h2>
+      <p>ZIP 파일을 압축 해제한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>unzip [옵션] 압축파일명.zip</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-l</code> — 압축 파일 내용 목록만 출력</li>
+        <li><code>-v</code> — 상세 정보와 함께 목록 출력</li>
+        <li><code>-t</code> — 압축 파일 무결성 테스트</li>
+        <li><code>-d 디렉토리</code> — 지정된 디렉토리에 압축 해제</li>
+        <li><code>-o</code> — 기존 파일 덮어쓰기 (확인 없이)</li>
+        <li><code>-n</code> — 기존 파일 덮어쓰지 않음</li>
+        <li><code>-j</code> — 디렉토리 구조 무시하고 평면적으로 압축 해제</li>
+        <li><code>-q</code> — 조용한 모드</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>unzip archive.zip                       # ZIP 파일 압축 해제
+unzip -l archive.zip                    # ZIP 파일 내용 목록만 출력
+unzip -d /tmp archive.zip               # /tmp 디렉토리에 압축 해제
+unzip -o archive.zip                    # 기존 파일 덮어쓰기
+unzip -t archive.zip                    # ZIP 파일 무결성 검사</code></pre>
+
+      <hr />
+
+      <h1>6. .bz2 파일 (bzip2 / bunzip2)</h1>
+
+      <p>
+        <code>bzip2</code>와 <code>bunzip2</code>는 Burrows-Wheeler 알고리즘을
+        사용하는 고효율 압축 도구이다. <code>gzip</code>보다 더 높은 압축률을
+        제공하지만 압축/해제 속도는 상대적으로 느리다.
+      </p>
+
+      <h2>bzip2 명령어</h2>
+      <p>파일을 압축하여 <code>.bz2</code> 파일을 생성한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>bzip2 [옵션] 파일명</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-v</code> — 압축 정보 출력 (verbose)</li>
+        <li><code>-c</code> — 표준 출력으로 압축 결과 출력</li>
+        <li><code>-d</code> — 압축 해제 (decompress)</li>
+        <li><code>-f</code> — 강제 압축</li>
+        <li><code>-k</code> — 원본 파일 유지</li>
+        <li><code>-t</code> — 압축 파일 무결성 테스트</li>
+        <li>
+          <code>-1 ~ -9</code> — 압축 레벨 (1: 빠름, 9: 최대 압축, 기본값 9)
+        </li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>bzip2 file.txt                          # file.txt를 file.txt.bz2로 압축
+bzip2 -v file.txt                       # 압축 정보와 함께 압축
+bzip2 -c file.txt > file.txt.bz2        # 원본 파일 유지하며 압축
+bzip2 -1 file.txt                       # 빠른 압축 (낮은 압축률)</code></pre>
+
+      <h2>bunzip2 명령어</h2>
+      <p><code>.bz2</code> 파일을 압축 해제한다.</p>
+
+      <h3>기본 문법</h3>
+      <pre><code>bunzip2 [옵션] 파일명.bz2</code></pre>
+
+      <h3>주요 옵션</h3>
+      <ul>
+        <li><code>-v</code> — 압축 해제 정보 출력</li>
+        <li><code>-c</code> — 표준 출력으로 압축 해제 결과 출력</li>
+        <li><code>-f</code> — 강제 압축 해제</li>
+        <li><code>-k</code> — 원본 .bz2 파일 유지</li>
+        <li><code>-t</code> — 압축 파일 무결성 테스트</li>
+      </ul>
+
+      <h3>사용 예시</h3>
+      <pre><code>bunzip2 file.txt.bz2                    # file.txt.bz2를 file.txt로 압축 해제
+bunzip2 -v file.txt.bz2                 # 압축 해제 정보와 함께 해제
+bunzip2 -c file.txt.bz2 > file.txt      # 원본 .bz2 파일 유지하며 압축 해제
+bzip2 -d file.txt.bz2                   # bzip2 -d로도 압축 해제 가능</code></pre>
+
+      <h2>bzcat 명령어</h2>
+      <p>압축된 파일의 내용을 압축 해제하지 않고 직접 출력한다.</p>
+      <pre><code>bzcat file.txt.bz2                      # 압축 파일 내용을 화면에 출력
+bzcat file.txt.bz2 | grep "pattern"     # 압축 파일에서 패턴 검색</code></pre>
+
+      <h2>압축률과 속도 비교</h2>
+      <table>
+        <tr>
+          <th>압축 도구</th>
+          <th>확장자</th>
+          <th>압축률</th>
+          <th>속도</th>
+          <th>특징</th>
+        </tr>
+        <tr>
+          <td>compress</td>
+          <td>.Z</td>
+          <td>낮음</td>
+          <td>빠름</td>
+          <td>유닉스 전통 도구</td>
+        </tr>
+        <tr>
+          <td>gzip</td>
+          <td>.gz</td>
+          <td>중간</td>
+          <td>빠름</td>
+          <td>가장 널리 사용</td>
+        </tr>
+        <tr>
+          <td>bzip2</td>
+          <td>.bz2</td>
+          <td>높음</td>
+          <td>느림</td>
+          <td>높은 압축률</td>
+        </tr>
+        <tr>
+          <td>zip</td>
+          <td>.zip</td>
+          <td>중간</td>
+          <td>중간</td>
+          <td>Windows 호환</td>
+        </tr>
+      </table>
+
+      <hr />
+
+      <h1>요약</h1>
+      <ul>
+        <li>
+          <code>tar</code>는 파일 아카이브의 표준 도구로, 압축과 함께 사용할 수
+          있다.
+        </li>
+        <li>
+          <code>jar</code>는 Java 플랫폼의 아카이브 도구로 ZIP 형식을 기반으로
+          한다.
+        </li>
+        <li>
+          <code>compress/uncompress</code>는 전통적인 유닉스 압축 도구이다.
+        </li>
+        <li>
+          <code>gzip/gunzip</code>은 가장 널리 사용되는 압축 도구로 빠르고
+          효율적이다.
+        </li>
+        <li><code>zip/unzip</code>은 Windows와 호환되는 범용 압축 형식이다.</li>
+        <li>
+          <code>bzip2/bunzip2</code>는 높은 압축률을 제공하는 고효율 압축
+          도구이다.
+        </li>
+      </ul>
+    </main>
+
+    <footer>ⓒ 2025 | 유닉스 개론 | 서울과학기술대학교</footer>
+  </body>
+</html>
